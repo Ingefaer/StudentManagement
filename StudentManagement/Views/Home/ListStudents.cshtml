@@ -1,0 +1,27 @@
+﻿@model IEnumerable<StudentManagement.Models.Student>
+
+
+<table>
+<thead>
+        <th>Id</th>
+        <th>Navn</th>
+        <th>Uddannelse</th>
+        <th>Semester</th>
+        <th>Email</th>
+</thead>
+<tbody>
+        @foreach (var Student in Model)
+        {
+            <tr>
+                <td>@Student.Id</td>
+                <td>@Student.Name</td>
+                <td>@Student.Education</td>
+                <td>@Student.Semester</td>
+                <td>@Student.Email</td>
+            </tr>
+        }
+        
+</tbody>
+</table>
+
+<button asp-action="Index"></button>

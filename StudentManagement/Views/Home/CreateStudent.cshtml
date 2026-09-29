@@ -1,0 +1,14 @@
+﻿@model StudentManagement.Models.Student
+
+<form asp-action="CreateStudent" method="post">
+    <input type="hidden" asp-for="Id" />
+<label>Navn:</label>
+    <input type="text" asp-for="Name" />
+<label>Uddannelse:</label>
+   <input type="text" asp-for="Education" />
+<label>Semester:</label>
+   <input type="text" asp-for="Semester" />
+<label>Email:</label>
+   <input type="email" asp-for="Email" />
+<button asp-action="CreateStudent">Gem</button>
+</form>
