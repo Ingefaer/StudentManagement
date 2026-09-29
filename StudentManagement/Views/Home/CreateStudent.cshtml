@@ -1,14 +1,33 @@
 ﻿@model StudentManagement.Models.Student
 
+
+<h2>Opret ny studerende</h2>
+
 <form asp-action="CreateStudent" method="post">
     <input type="hidden" asp-for="Id" />
-<label>Navn:</label>
-    <input type="text" asp-for="Name" />
-<label>Uddannelse:</label>
-   <input type="text" asp-for="Education" />
-<label>Semester:</label>
-   <input type="text" asp-for="Semester" />
-<label>Email:</label>
-   <input type="email" asp-for="Email" />
-<button asp-action="CreateStudent">Gem</button>
+
+    <div class="form-group mb-3">
+        <label>Navn:</label><br />
+        <input type="text" asp-for="Name" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Uddannelse:</label><br />
+        <input type="text" asp-for="Education" />
+   </div>
+
+   <div class="form-group mb-3">
+        <label>Semester:</label><br />
+        <input type="text" asp-for="Semester" />
+   </div>
+
+   <div class="form-group mb-3">
+        <label>Email:</label><br />
+        <input type="email" asp-for="Email" />
+   </div>
+
+   <div class="form-group mb-3">
+        <button asp-action="CreateStudent" class="btn btn-primary">Gem</button>
+    </div>
+
 </form>
