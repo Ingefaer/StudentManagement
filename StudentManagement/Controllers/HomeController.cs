@@ -19,11 +19,16 @@ namespace StudentManagement.Controllers
 
         public IActionResult CreateStudent()
         {
-            return View();
+            return View(new Student());
         }
         [HttpPost]
         public IActionResult CreateStudent(Student student)
         {
+             if (!ModelState.IsValid)
+            {
+                return View(student);
+            }
+
             _context.Students.Add(student);
             _context.SaveChanges();
 
