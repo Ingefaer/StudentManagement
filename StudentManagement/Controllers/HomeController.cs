@@ -14,7 +14,8 @@ namespace StudentManagement.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var students = _context.Students.ToList();
+            return View(students);
         }
 
         public IActionResult CreateStudent()
@@ -32,13 +33,51 @@ namespace StudentManagement.Controllers
             _context.Students.Add(student);
             _context.SaveChanges();
 
-            return RedirectToAction("ListStudents");
+            return RedirectToAction("Index");
         }
 
-        public IActionResult ListStudents()
+        public IActionResult EditStudent(int id)
         {
-            var students = _context.Students.ToList();
-            return View(students);
+           Student? student = _context.Students.Find(id);
+            return View(student);
         }
-    }
+
+        [HttpPost]
+        public IActionResult EditStudent(Student student)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(student);
+            }
+
+            Student? existingStudent = _context.Students.Find(student.Id);
+            if (existingStudent != null)
+            {
+                existingStudent.Name = student.Name;
+                existingStudent.Education = student.Education;
+                existingStudent.Semester = student.Semester;
+                existingStudent.Email = student.Email;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteStudent(int id)
+        {
+            Student? student = _context.Students.Find(id);
+
+            return View(student);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteStudent(Student student)
+        {
+            if (student != null)
+            {
+                _context.Students.Remove(student);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+}
 }

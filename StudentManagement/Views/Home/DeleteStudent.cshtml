@@ -1,0 +1,16 @@
+﻿@model Student
+
+<h1>Delete Student</h1>
+
+<p>Er du sikker på at du vil slette denne studerende?</p>
+
+<p><b>Navn:</b>@Model.Name</p>
+<p><b>Uddannelse:</b>@Model.Education</p>
+<p><b>Semester:</b>@Model.Semester</p>
+<p><b>Email:</b>@Model.Email</p>
+
+<form asp-action="DeleteStudent" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Slet</button>
+    <a asp-action="Index" class="btn btn-secondary">Annullér</a>
+</form>
