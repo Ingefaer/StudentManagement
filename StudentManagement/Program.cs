@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Controllers;
+using StudentManagement.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<StudentManagementDbContext>(options => options.UseInMemoryDatabase("StudentManagement"));
+builder.Services.AddDbContext<StudentManagementDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 // Register the repository in dependency injection.
 // Singleton: one shared instance, so the in-memory repository

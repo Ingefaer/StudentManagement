@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StudentManagement.Models; 
+using StudentManagement.Models;
+using StudentManagement.Repositories;
 
 
 namespace StudentManagement.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly StudentManagementDbContext _context;
+        private readonly IStudentRepository _repository;
 
-        public HomeController(StudentManagementDbContext context)
+        public HomeController(IStudentRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
         public IActionResult Index()
         {
-            var students = _context.Students.ToList();
+            var students = _repository.GetAll();
             return View(students);
         }
 
@@ -30,15 +31,14 @@ namespace StudentManagement.Controllers
                 return View(student);
             }
 
-            _context.Students.Add(student);
-            _context.SaveChanges();
+            _repository.Add(student);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult EditStudent(int id)
         {
-           Student? student = _context.Students.Find(id);
+           Student? student = _repository.GetById(id);
             return View(student);
         }
 
@@ -50,22 +50,15 @@ namespace StudentManagement.Controllers
                 return View(student);
             }
 
-            Student? existingStudent = _context.Students.Find(student.Id);
-            if (existingStudent != null)
-            {
-                existingStudent.Name = student.Name;
-                existingStudent.Education = student.Education;
-                existingStudent.Semester = student.Semester;
-                existingStudent.Email = student.Email;
-                _context.SaveChanges();
-            }
+          
+                _repository.Update(student);
+           
             return RedirectToAction("Index");
         }
 
         public IActionResult DeleteStudent(int id)
         {
-            Student? student = _context.Students.Find(id);
-
+            Student? student = _repository.GetById(id);
             return View(student);
         }
 
@@ -74,8 +67,7 @@ namespace StudentManagement.Controllers
         {
             if (student != null)
             {
-                _context.Students.Remove(student);
-                _context.SaveChanges();
+                _repository.Delete(student);
             }
             return RedirectToAction("Index");
         }
